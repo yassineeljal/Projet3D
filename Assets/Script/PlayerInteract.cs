@@ -1,28 +1,28 @@
-using UnityEngine;
+    using UnityEngine;
 
-public class PlayerInteract : MonoBehaviour
-{
-    private Camera cam;
-    [SerializeField] private float distance = 3f;
-    [SerializeField] private LayerMask mask;
-    private InputManager inputManager;
-
-    void Start()
+    public class PlayerInteract : MonoBehaviour
     {
-        cam = GetComponent<PlayerLook>().cam;
-        inputManager = GetComponent<InputManager>();
-    }
+        private Camera cam;
+        [SerializeField] private float distance = 3f;
+        [SerializeField] private LayerMask mask;
+        private InputManager inputManager;
 
-    public void ProcessInteract()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, distance, mask))
+        void Start()
         {
-            WeaponPickup weapon = hit.transform.GetComponent<WeaponPickup>();
-            if (weapon != null)
+            cam = GetComponent<PlayerLook>().cam;
+            inputManager = GetComponent<InputManager>();
+        }
+
+        public void ProcessInteract()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, distance, mask))
             {
-                weapon.Pickup(inputManager);
+                WeaponPickup weapon = hit.transform.GetComponent<WeaponPickup>();
+                if (weapon != null)
+                {
+                    weapon.Pickup(inputManager);
+                }
             }
         }
     }
-}

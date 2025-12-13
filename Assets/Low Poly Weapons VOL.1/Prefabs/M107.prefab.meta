@@ -1,15 +1,7 @@
 fileFormatVersion: 2
-guid: 7359baf27e84aa44cafac3788c8be0f1
-NativeFormatImporter:
+guid: 56b4b4b2ac70d1e4daf07302c930566f
+PrefabImporter:
   externalObjects: {}
-  mainObjectFileID: 100100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 151980
-  packageName: Untitled
-  packageVersion: 1.0
-  assetPath: Assets/Low Poly Weapons VOL.1/Prefabs/M107.prefab
-  uploadId: 324403

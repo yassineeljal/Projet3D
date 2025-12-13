@@ -33,7 +33,11 @@ public class MonsterHealth : MonoBehaviour
     {
         isDead = true;
 
+        QuestZombieCounter.Instance.ZombieKilled();
+
         anim.SetTrigger("Die");
+
+        
 
         GetComponent<MonsterAI>().enabled = false;
         GetComponent<NavMeshAgent>().enabled = false;
