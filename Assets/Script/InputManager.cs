@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,39 +8,48 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
     private PlayerLook look;
+    private WeaponManager weaponManager; 
+    private PlayerInteract playerInteract; 
 
-    // Start is called before the first frame update
     void Awake()
     {
         playerInput = new PlayerInput();
         onFoot = playerInput.OnFoot;
+
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
+        weaponManager = GetComponent<WeaponManager>(); 
+        playerInteract = GetComponent<PlayerInteract>();
+
         onFoot.Jump.performed += ctx => motor.Jump();
+
+        onFoot.Shoot.started += ctx => weaponManager.StartFiring();
+        onFoot.Shoot.canceled += ctx => weaponManager.StopFiring();
+
+        onFoot.Interact.performed += ctx => playerInteract.ProcessInteract();
+
+        onFoot.Slot1.performed += ctx => weaponManager.SwitchToWeapon(0);
+        onFoot.Slot2.performed += ctx => weaponManager.SwitchToWeapon(1);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        //tell the playermotor to move using the value from our movement action.
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
     }
 
     void LateUpdate()
     {
-        //tell the playermotor to move using the value from our movement action.
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
 
+    private void OnEnable() => onFoot.Enable();
+    private void OnDisable() => onFoot.Disable();
 
-
-    private void OnEnable()
+    public void PickupWeapon(int index)
     {
-        onFoot.Enable();
-    }
-
-    private void OnDisable()
-    {
-        onFoot.Disable();
+        if(weaponManager != null)
+        {
+            weaponManager.PickupWeapon(index);
+        }
     }
 }
